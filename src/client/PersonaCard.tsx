@@ -36,7 +36,8 @@ function ChevronDown(props: { open: boolean }): any {
 
 export function PersonaCard(props: { scope: ScopeLike }): any {
   const { scope } = props
-  const [open, setOpen] = useState(true)
+  // 与官方 PluginCard 一致：默认折叠（useState(false)）。
+  const [open, setOpen] = useState(false)
   const snap = useSyncExternalStore(
     (listener: () => void) => scope.subscribe(listener),
     () => scope.getSnapshot(),
@@ -129,7 +130,7 @@ export function PersonaCard(props: { scope: ScopeLike }): any {
 
       {open && (
         <div style={{ borderTop: '1px solid var(--dsw-alias-border-l2)', margin: '0 16px', paddingBottom: '8px' }}>
-          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', margin: '12px 0 10px' }}>
+          <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', margin: '12px 0 12px' }}>
             {templates.map(t => {
               const active = selected?.id === t.id
               return (
@@ -156,7 +157,7 @@ export function PersonaCard(props: { scope: ScopeLike }): any {
                 appearance: 'none', font: 'inherit', fontSize: '13px', lineHeight: '1.5',
                 padding: '3px 10px', borderRadius: '8px', cursor: 'pointer',
                 color: 'var(--dsw-alias-label-secondary)', background: 'none',
-                border: '1px dashed var(--dsw-alias-border-l2)',
+                border: '1px solid var(--dsw-alias-border-l2)',
               }}
             >
               ＋ 新增
@@ -168,46 +169,49 @@ export function PersonaCard(props: { scope: ScopeLike }): any {
               还没有模板——点"＋ 新增"创建一个。
             </div>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label
-                style={{
-                  fontSize: '13px', lineHeight: '1.5', color: 'var(--dsw-alias-label-secondary)',
-                  display: 'flex', alignItems: 'center', gap: '8px',
-                }}
-              >
-                名称
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+              <div>
+                <div style={{ fontSize: '12px', lineHeight: '1.5', color: 'var(--dsw-alias-label-tertiary)', marginBottom: '4px' }}>
+                  名称
+                </div>
                 <input
                   value={draftName}
                   onChange={e => setDraftName(e.target.value)}
                   placeholder="例如：梦境精灵"
                   style={{
-                    font: 'inherit', fontSize: '13px', lineHeight: '1.5',
+                    font: 'inherit', fontSize: '14px', lineHeight: '1.6',
                     color: 'var(--dsw-alias-label-primary)',
                     backgroundColor: 'var(--dsw-alias-bg-layer-3)',
                     border: '1px solid var(--dsw-alias-border-l2)',
-                    borderRadius: '8px', padding: '4px 10px', outline: 'none',
-                    width: '220px',
+                    borderRadius: '8px', padding: '6px 10px', outline: 'none',
+                    width: '100%', boxSizing: 'border-box',
                   }}
+                  onFocus={e => { (e.currentTarget as HTMLInputElement).style.borderColor = 'var(--dsw-alias-label-dimmed)' }}
+                  onBlur={e => { (e.currentTarget as HTMLInputElement).style.borderColor = 'var(--dsw-alias-border-l2)' }}
                 />
-              </label>
+              </div>
 
-              <label style={{ fontSize: '13px', lineHeight: '1.5', color: 'var(--dsw-alias-label-secondary)', display: 'flex', gap: '8px', alignItems: 'flex-start' }}>
-                <span style={{ paddingTop: '5px' }}>文字</span>
+              <div>
+                <div style={{ fontSize: '12px', lineHeight: '1.5', color: 'var(--dsw-alias-label-tertiary)', marginBottom: '4px' }}>
+                  人设内容
+                </div>
                 <textarea
                   value={draftText}
                   onChange={e => setDraftText(e.target.value)}
-                  placeholder="人设文字，支持 {{model}}、{{cwd}} 占位符；保存后用于新选择"
+                  placeholder="人设内容，支持 {{model}}、{{cwd}} 占位符；保存后用于新选择"
                   rows={4}
                   style={{
-                    font: 'inherit', fontSize: '13px', lineHeight: '1.6',
+                    font: 'inherit', fontSize: '14px', lineHeight: '1.6',
                     color: 'var(--dsw-alias-label-primary)',
                     backgroundColor: 'var(--dsw-alias-bg-layer-3)',
                     border: '1px solid var(--dsw-alias-border-l2)',
-                    borderRadius: '8px', padding: '4px 10px', outline: 'none',
-                    width: 'min(520px, 100%)', resize: 'vertical',
+                    borderRadius: '8px', padding: '6px 10px', outline: 'none',
+                    width: '100%', boxSizing: 'border-box', resize: 'vertical',
                   }}
+                  onFocus={e => { (e.currentTarget as HTMLTextAreaElement).style.borderColor = 'var(--dsw-alias-label-dimmed)' }}
+                  onBlur={e => { (e.currentTarget as HTMLTextAreaElement).style.borderColor = 'var(--dsw-alias-border-l2)' }}
                 />
-              </label>
+              </div>
 
               <div style={{
                 display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '8px',
