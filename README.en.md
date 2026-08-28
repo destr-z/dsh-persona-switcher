@@ -8,7 +8,7 @@ A per-session persona template switcher for [DeepSeek Harness](https://github.co
 
 - **Per-session memory** — every conversation keeps its own choice; an existing choice records a snapshot taken at selection time
 - **Pick before you start** — the `人设` selector in the composer toolbar is available before the first message
-- **Template library** — Settings ▸ Plugins ▸ 人设: add / edit / delete templates; three built-ins (默认助手 / 中文助手 / 梦境精灵)
+- **Template library** — Settings ▸ Plugins ▸ 人设: add / edit / delete templates; ships with one built-in (猫娘)
 - **Live** — saving takes effect immediately; no restart, no new session needed
 - **Native look** — card and dropdown styles replicate DSH's own controls (PluginCard / Menu) value by value
 
